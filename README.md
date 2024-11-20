@@ -173,66 +173,7 @@ The Lambda function processes the request and communicates with the AWS SageMake
 The prediction result is sent back to the front-end via the API Gateway.
 The front-end displays the predicted price range to the user.
 
-AWS LAMBDA FUNCTION:
 
-lambda_function.py
-
-
-import os
-import json
-import boto3
-
-# Grab environment variables
-ENDPOINT_NAME = os.environ['ENDPOINT_NAME']
-runtime = boto3.client('runtime.sagemaker')
-
-def lambda_handler(event, context):
-    try:
-        # Parse input features from the event
-        input_features = json.loads(event['body'])
-        # Ensure all required features are present
-        required_features = [
-            'battery_power', 'blue', 'clock_speed', 'dual_sim', 'fc', 'four_g', 
-            'int_memory', 'm_dep', 'mobile_wt', 'n_cores', 'pc', 'px_height',
-            'px_width', 'ram', 'sc_h', 'sc_w', 'talk_time', 'three_g',
-            'touch_screen', 'wifi', 'brand'
-        ]
-    # Check if all required features are provided
-        missing_features = [feature for feature in required_features if feature not in input_features]
-        if missing_features:
-            return {
-                "statusCode": 400,
-                "body": json.dumps({"error": f"Missing required features: {', '.join(missing_features)}"})
-            }
-    # Create a CSV-formatted string for the model input
-        payload_data = ','.join(str(input_features[feature]) for feature in required_features)
-        # Invoke the SageMaker model endpoint
-        response = runtime.invoke_endpoint(
-            EndpointName=ENDPOINT_NAME,
-            ContentType='text/csv',
-            Body=payload_data
-        )
-        # Parse the model's response
-        result = json.loads(response['Body'].read().decode())
-        # Construct the response to return
-        preds = {"Prediction": result}
-        response_dict = {
-            "statusCode": 200,
-            "headers": {
-                "Access-Control-Allow-Headers": "Content-Type",
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
-            },
-            "body": json.dumps(preds)
-        }
-        return response_dict
-    except Exception as e:
-        # Return error message if something goes wrong
-        return {
-            "statusCode": 500,
-            "body": json.dumps({"error": str(e)})
-        }
-        
 Test Function:(JSON Format)
 {
   "body": "{\"battery_power\": 1500, \"blue\": 1, \"clock_speed\": 2.5, \"dual_sim\": 1, \"fc\": 5, \"four_g\": 1, \"int_memory\": 16, \"m_dep\": 0.5, \"mobile_wt\": 150, \"n_cores\": 4, \"pc\": 13, \"px_height\": 800, \"px_width\": 1200, \"ram\": 3000, \"sc_h\": 15, \"sc_w\": 8, \"talk_time\": 20, \"three_g\": 1, \"touch_screen\": 1, \"wifi\": 1, \"brand\": 16}"
