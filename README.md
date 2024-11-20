@@ -134,4 +134,41 @@ Delete the Endpoint:
 After testing, remember to delete the SageMaker endpoint to avoid additional charges.
 WorkFlow
 ![image](https://github.com/user-attachments/assets/9262ba2c-fb5d-411a-a20a-2281052edaba)
+![image](https://github.com/user-attachments/assets/c85a4aff-2d9e-4930-8fce-2470cd56923b)
+Integration and Deployment Workflow
+The project utilizes various AWS services integrated seamlessly to provide real-time predictions. Below is a detailed explanation of how these components are connected:
+
+AWS SageMaker Endpoint:
+
+The trained Random Forest model is deployed as an endpoint in AWS SageMaker.
+This endpoint is responsible for serving predictions when invoked with input features.
+AWS Lambda Function:
+
+AWS Lambda acts as an intermediary between the SageMaker endpoint and the API Gateway.
+It invokes the SageMaker endpoint by sending input data and processing the prediction response.
+The Lambda function ensures efficient and stateless communication.
+API Gateway:
+
+The API Gateway is configured to expose a REST API that can be accessed publicly.
+It routes incoming HTTP requests from the React.js front-end to the AWS Lambda function.
+Once the Lambda function executes, the result is returned to the front-end through the API Gateway.
+React.js Frontend:
+
+The front-end application interacts with the deployed REST API using the HTTP/HTTPS link provided by the API Gateway.
+It sends user inputs (mobile specifications) to the API and receives the predicted price range in real time.
+The result is displayed to the user in an intuitive interface.
+HTTP and REST API Links
+The deployed API Gateway provides two types of links:
+
+REST API Link: Used to invoke the Lambda function with user inputs.
+HTTP Link: Used by the React.js front-end to fetch predictions from the back-end.
+End-to-End Data Flow
+The user interacts with the React.js front-end to input mobile specifications.
+The front-end sends an HTTP request to the API Gateway.
+The API Gateway triggers the AWS Lambda function.
+The Lambda function processes the request and communicates with the AWS SageMaker Endpoint to get predictions.
+The prediction result is sent back to the front-end via the API Gateway.
+The front-end displays the predicted price range to the user.
+AWS LAMBDA FUNCTION:
+
 
