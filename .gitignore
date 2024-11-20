@@ -21,4 +21,14 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+*
+!public/
+!src/
+!.gitignore
+=======
+>>>>>>> ba7cc63462f810cad1ce36b77c65e4a73313eabb
+>>>>>>> 7ccca5831273f1633d8626975504a91ce4038aa7
