@@ -1,0 +1,75 @@
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f8ff;
+}
+
+.predictor-container {
+  width: 60%;
+  margin: auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-size: 2rem;
+  color: #1e90ff;
+  margin-bottom: 20px;
+}
+
+.features-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+input[type="text"],
+input[type="range"] {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+}
+
+input[type="checkbox"] {
+  margin-top: 10px;
+}
+
+button {
+  padding: 12px 20px;
+  background-color: #1e90ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #4682b4;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.prediction-result {
+  margin-top: 20px;
+  font-size: 1.5rem;
+  text-align: center;
+  color: #32cd32;
+}
+
+.error-message {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  color: red;
+  text-align: center;
+}
